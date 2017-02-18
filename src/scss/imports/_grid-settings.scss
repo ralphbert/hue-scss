@@ -1,0 +1,89 @@
+// sizes
+$screen-xs: 480px;
+$screen-sm: 768px;
+$screen-md: 992px;
+$screen-lg: 1200px;
+
+$screen-xs-min: $screen-xs;
+$screen-xs-max: $screen-sm - 1px;
+$screen-sm-min: $screen-sm;
+$screen-sm-max: $screen-md - 1px;
+$screen-md-min: $screen-md;
+$screen-md-max: $screen-lg - 1px;
+$screen-lg-min: $screen-lg;
+
+$screen-sizes: (
+  xs: 0,
+  sm: $screen-xs-min,
+  md: $screen-sm-min,
+  lg: $screen-md-min,
+  xl: $screen-lg-min
+);
+
+$sizes: xs, sm, md, lg;
+
+// gutter
+
+$grid-gutter-width: 50px;
+
+@function grid-gutter-half($gutter: $grid-gutter-width) {
+  @return $gutter / 2;
+}
+
+@mixin gutter-padding {
+  padding-left: grid-gutter-half();
+  padding-right: grid-gutter-half();
+}
+
+// columns
+
+$grid-column-count: 12;
+
+@mixin grid-make-default-column {
+  flex-grow: 1;
+  flex-shrink: 0;
+  flex-basis: auto;
+  min-width: 0;
+}
+
+@mixin grid-make-column($col) {
+  $width: (100% / 12 * $col);
+  flex-grow: 0;
+  flex-shrink: 0;
+  flex-basis: $width;
+  width: $width;
+  overflow: hidden;
+  @include gutter-padding;
+}
+
+@mixin grid-make-responsive-column($size) {
+  @media (min-width: map-get($screen-sizes, $size)) {
+    .col {
+      &.col-#{$size}-stretch {
+        align-self: stretch;
+      }
+
+      &.col-#{$size}-top {
+        align-self: flex-start;
+      }
+
+      &.col-#{$size}-bottom {
+        align-self: flex-end;
+      }
+
+      &.col-#{$size}-middle {
+        align-self: center;
+      }
+
+      &.col-#{$size}-auto {
+        @include grid-make-default-column();
+      }
+
+      @for $col from 1 through $grid-column-count {
+        &.col-#{$size}-#{$col} {
+          @include grid-make-column($col);
+        }
+      }
+    }
+  }
+}
