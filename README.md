@@ -1,6 +1,6 @@
 # hue-scss
 
-A grid system written in scss as an example for my lecture
+A example of how to use bootstrap-sass
 
 ## Installation
 

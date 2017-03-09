@@ -43,6 +43,10 @@ module.exports = {
     new webpack.BannerPlugin({
       banner: 'Brought to you by Ralph with  😃',
       entryOnly: true
+    }),
+    new webpack.ProvidePlugin({
+      $: 'jquery',
+      jQuery: 'jquery'
     })
   ]
 };
